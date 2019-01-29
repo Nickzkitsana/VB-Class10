@@ -17,4 +17,36 @@ Public Class Form1
         conn.Close()
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            conn.Open()
+            Dim sql As String = "insert into employees(firstname, lastname, birthdate) 
+                             values(@firstname, @lastname, @birthdate)"
+            Dim cmd As New SqlCommand(sql, conn)
+
+            cmd.Parameters.AddWithValue("firstname", TextBox1.Text)
+            cmd.Parameters.AddWithValue("lastname", TextBox2.Text)
+
+            Dim birthDate As String = DateTimePicker1.Value.Year & "/" &
+                                      DateTimePicker1.Value.Month & "/" &
+                                      DateTimePicker1.Value.Day
+            cmd.Parameters.AddWithValue("birthdate", birthDate)
+
+            If cmd.ExecuteNonQuery = -1 Then
+                MessageBox.Show("ไม่สามารถบันทึกข้อมูล", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Else
+                MessageBox.Show("บันทึกข้อมูลสำเร็จ", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+            conn.Close()
+            showData()
+        Catch ex As Exception
+            Dim message = String.Format("Error : {0}", ex.Message)
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        showData()
+    End Sub
 End Class
