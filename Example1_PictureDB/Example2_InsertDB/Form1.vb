@@ -30,6 +30,9 @@ Public Class Form1
             MessageBox.Show("ไม่สามารถเพิ่มข้อมูลได้", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Else
             MessageBox.Show("สามารถเพิ่มข้อมูลได้", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            TextBox1.Clear()
+            TextBox2.Clear()
+            TextBox1.Select()
         End If
 
 
